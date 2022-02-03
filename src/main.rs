@@ -1,30 +1,12 @@
-use actix_web::{get, web, App, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 
-mod types;
-
-#[get("/")]
-async fn get_ping() -> impl Responder {
-    let response = types::Ping { ok: true };
-    return web::Json(response);
-}
-
-#[get("/users")]
-async fn get_users() -> impl Responder {
-    let mut users: Vec<types::User> = Vec::new();
-    users.push(types::User {
-        username: "user_1".to_string(),
-        id: 897364597836,
-    });
-    users.push(types::User {
-        username: "user_2".to_string(),
-        id: 2837402847345,
-    });
-    users.push(types::User {
-        username: "user_3".to_string(),
-        id: 2349823689274,
-    });
-    return web::Json(users);
-}
+// routes
+pub mod routes;
+pub use routes::ping::*;
+pub use routes::user::*;
+// types
+pub mod types;
+pub use types::structs::*;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
